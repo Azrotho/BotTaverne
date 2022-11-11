@@ -56,6 +56,22 @@ public class OnCommand extends ListenerAdapter {
             case "wishlist":
                 event.reply("Liste de souhait de Azrotho: \n\n- Casque VR (Meta Quest 2) \n- Slime VR *(en fullbody tracking :3)* \n- Persona 5 Royal sur Steam \n- Des Bonbons \n- 32 Go de RAM *(16x2)*").setEphemeral(true).queue();
                 break;
+            case "say":
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    event.getChannel().sendMessage(event.getOption("message").getAsString()).queue();
+                    event.reply("Vous avez dit: " + event.getOption("message").getAsString()).setEphemeral(true).queue();
+                }else{
+                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
+                }
+                break;
+            case "reply":
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    event.getMessageChannel().retrieveMessageById(event.getOption("id").getAsLong()).queue(message -> message.reply(event.getOption("message").getAsString()).queue());
+                    event.reply("Vous avez répondu: " + event.getOption("message").getAsString()).setEphemeral(true).queue();
+                }else{
+                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
+                }
+                break;
         }
     }
 }

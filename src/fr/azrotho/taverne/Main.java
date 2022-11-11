@@ -87,6 +87,15 @@ public class Main {
 //                Commands.slash("giverole", "Donne le role à tous le monde")
 //                        .addOption(OptionType.ROLE, "role", "Le rôle à donner", true)
 //        );
+        commands.addCommands(
+                Commands.slash("say", "Fait dire quelque chose au bot")
+                        .addOption(OptionType.STRING, "message", "Le message à faire dire au bot", true)
+        );
+        commands.addCommands(
+                Commands.slash("reply", "Répond à un message")
+                        .addOption(OptionType.STRING, "message", "Le message à faire dire au bot", true)
+                        .addOption(OptionType.STRING, "id", "L'id du message à répondre", true)
+        );
 
         commands.queue();
     }
