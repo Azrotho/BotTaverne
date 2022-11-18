@@ -72,6 +72,14 @@ public class OnCommand extends ListenerAdapter {
                     event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
                 }
                 break;
+            case "senddm":
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    event.getOption("user").getAsUser().openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage(event.getOption("message").getAsString()).queue());
+                    event.reply("Vous avez envoyé un message privé à " + event.getOption("user").getAsUser().getAsMention() + " : " + event.getOption("message").getAsString()).setEphemeral(true).queue();
+                }else{
+                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
+                }
+                break;
         }
     }
 }

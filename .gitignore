@@ -2,3 +2,5 @@
 *.xml
 src/fr/azrotho/taverne/utils/Token.java
 src/fr/azrotho/taverne/utils/Token.java
+*.class
+src/fr/azrotho/taverne/utils/Token.java

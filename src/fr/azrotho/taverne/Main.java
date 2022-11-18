@@ -97,6 +97,12 @@ public class Main {
                         .addOption(OptionType.STRING, "id", "L'id du message à répondre", true)
         );
 
+        commands.addCommands(
+                Commands.slash("senddm", "Envoie un message en DM")
+                        .addOption(OptionType.USER, "user", "L'utilisateur à qui envoyer le message", true)
+                        .addOption(OptionType.STRING, "message", "Le message à envoyer", true)
+        );
+
         commands.queue();
     }
 }
