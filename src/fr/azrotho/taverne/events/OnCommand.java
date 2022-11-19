@@ -4,6 +4,7 @@ import fr.azrotho.taverne.commands.*;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class OnCommand extends ListenerAdapter {
 
@@ -76,6 +77,13 @@ public class OnCommand extends ListenerAdapter {
                 if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
                     event.getOption("user").getAsUser().openPrivateChannel().queue(privateChannel -> privateChannel.sendMessage(event.getOption("message").getAsString()).queue());
                     event.reply("Vous avez envoyé un message privé à " + event.getOption("user").getAsUser().getAsMention() + " : " + event.getOption("message").getAsString()).setEphemeral(true).queue();
+                }else{
+                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
+                }
+                break;
+            case "sendticket":
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    event.getChannel().asTextChannel().sendMessage("Cliquer pour ouvrir un Ticket").addActionRow(Button.primary("ticket", "Ouvrir un Ticket")).queue();
                 }else{
                     event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
                 }

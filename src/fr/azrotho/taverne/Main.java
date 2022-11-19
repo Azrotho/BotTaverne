@@ -102,6 +102,9 @@ public class Main {
                         .addOption(OptionType.USER, "user", "L'utilisateur à qui envoyer le message", true)
                         .addOption(OptionType.STRING, "message", "Le message à envoyer", true)
         );
+        commands.addCommands(
+                Commands.slash("sendticket", "Envoie un message dans le salon ticket")
+        );
 
         commands.queue();
     }

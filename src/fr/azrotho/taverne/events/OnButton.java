@@ -1,7 +1,11 @@
 package fr.azrotho.taverne.events;
 
+import fr.azrotho.taverne.utils.TicketCreation;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
+import java.util.EnumSet;
 
 public class OnButton extends ListenerAdapter {
 
@@ -88,6 +92,14 @@ public class OnButton extends ListenerAdapter {
                 event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById("1043541812444401767")).queue();
                 event.reply("Vous avez rejoint le rôle: " + event.getGuild().getRoleById("1043541812444401767").getAsMention()).setEphemeral(true).queue();
             }
+        }
+        if(event.getButton().getId().equals("ticket")){
+            TicketCreation.createTicket(event.getMember());
+        }
+        if(event.getButton().getId().equals("closeticket")){
+                event.getChannel().asTextChannel().upsertPermissionOverride(event.getMember()).setDenied(EnumSet.of(Permission.VIEW_CHANNEL)).queue();
+                event.getChannel().sendMessage("Vous avez fermé le ticket").queue();
+                event.getChannel().asTextChannel().getManager().setName("fermer-" + event.getUser().getName()).queue();
         }
     }
 }
