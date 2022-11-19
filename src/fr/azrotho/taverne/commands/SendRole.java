@@ -18,5 +18,13 @@ public class SendRole {
         guild.getChannelById(TextChannel.class, "714802879285952543").sendMessage("Pour Activer/Désactiver les Notifs TikTok !").addActionRow(
                 Button.primary("tiktok", "Activer/Désactiver les Notifs TikTok")
         ).queue();
+        guild.getChannelById(TextChannel.class, "714802879285952543").sendMessage("Sélectionner votre/vos pronom(s)").addActionRow(
+                Button.primary("il", "IL"),
+                Button.primary("elle", "ELLE"),
+                Button.primary("iel", "IEL"),
+                Button.primary("ask", "ASK"),
+                Button.primary("autre", "AUTRE")
+        ).queue();
+
     }
 }

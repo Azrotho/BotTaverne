@@ -80,9 +80,9 @@ public class Main {
                 Commands.slash("wishlist", "Affiche ma liste de souhait")
         );
 
-//        commands.addCommands(
-//                Commands.slash("sendrole", "Envoie le rôle")
-//        );
+       commands.addCommands(
+                Commands.slash("sendrole", "Envoie le rôle")
+        );
 //        commands.addCommands(
 //                Commands.slash("giverole", "Donne le role à tous le monde")
 //                        .addOption(OptionType.ROLE, "role", "Le rôle à donner", true)
