@@ -47,6 +47,7 @@ public class Main {
                 .addOption(OptionType.STRING, "réponse1", "La première réponse", true)
                 .addOption(OptionType.STRING, "réponse2", "La deuxième réponse", true)
                 .addOption(OptionType.STRING, "réponse3", "La troisième réponse", false)
+                .addOption(OptionType.STRING, "réponse4", "La quatrième réponse", false)
                 );
 
         commands.addCommands(

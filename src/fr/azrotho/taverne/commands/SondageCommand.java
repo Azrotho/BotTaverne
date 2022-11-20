@@ -23,4 +23,13 @@ public class SondageCommand {
             message.addReaction(Emoji.fromUnicode("\uD83D\uDFE2")).queue();
         });
     }
+    public static void createSondage4(Guild guild, String question2, String reponse1, String reponse2, String reponse3, String reponse4) {
+        TextChannel channel = guild.getChannelById(TextChannel.class, "1038185685821173861");
+        channel.sendMessage("Sondage: " + question2 + "\n\n" + ":red_circle: " + reponse1 + "\n" + ":orange_circle: " + reponse2 + "\n" + ":green_circle: " + reponse3 + "\n" + ":blue_circle: " + reponse4).queue(message -> {
+            message.addReaction(Emoji.fromUnicode("\uD83D\uDD34")).queue();
+            message.addReaction(Emoji.fromUnicode("\uD83D\uDFE0")).queue();
+            message.addReaction(Emoji.fromUnicode("\uD83D\uDFE2")).queue();
+            message.addReaction(Emoji.fromUnicode("\uD83D\uDD35")).queue();
+        });
+    }
 }

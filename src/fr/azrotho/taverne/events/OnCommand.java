@@ -19,7 +19,11 @@ public class OnCommand extends ListenerAdapter {
                 break;
             case "sondage":
                 if(event.getOption("réponse3")!= null){
-                    SondageCommand.createSondage3(event.getGuild(), event.getOption("question").getAsString(), event.getOption("réponse1").getAsString(), event.getOption("réponse2").getAsString(), event.getOption("réponse3").getAsString());
+                    if(event.getOption("réponse4")!=null){
+                        SondageCommand.createSondage4(event.getGuild(), event.getOption("question").getAsString(), event.getOption("réponse1").getAsString(), event.getOption("réponse2").getAsString(), event.getOption("réponse3").getAsString(), event.getOption("réponse4").getAsString());
+                    }else {
+                        SondageCommand.createSondage3(event.getGuild(), event.getOption("question").getAsString(), event.getOption("réponse1").getAsString(), event.getOption("réponse2").getAsString(), event.getOption("réponse3").getAsString());
+                    }
                 }else {
                     SondageCommand.createSondage(event.getGuild(), event.getOption("question").getAsString(), event.getOption("réponse1").getAsString(), event.getOption("réponse2").getAsString());
                 }
