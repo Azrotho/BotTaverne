@@ -17,9 +17,18 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import java.util.EnumSet;
+import java.util.HashMap;
 
 public class Main {
+
+
+
+
+
+
     public static void main(String[] args) {
+
+
         JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .setActivity(Activity.streaming("sur twitch.tv/azrotho", "https://www.twitch.tv/azrotho"))
