@@ -31,7 +31,7 @@ public class Main {
 
         JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
-                .setActivity(Activity.streaming("sur twitch.tv/azrotho", "https://www.twitch.tv/azrotho"))
+                .setActivity(Activity.streaming("sur twitch.tv/azrotho", "https://www.twitch.tv/azrotho")) // Display activity
                 .addEventListeners(new OnCommand())
                 .addEventListeners(new OnButton())
                 .addEventListeners(new OnMessage())
