@@ -46,7 +46,7 @@ public class OnButton extends ListenerAdapter {
             TicketCreation.createTicket(event.getMember());
         }
         if(event.getButton().getId().equals("closeticket")){
-                event.getChannel().asTextChannel().upsertPermissionOverride(event.getMember()).setDenied(EnumSet.of(Permission.VIEW_CHANNEL)).queue();
+                event.getChannel().asTextChannel().getManager().putPermissionOverride(event.getMember(), null, EnumSet.of(Permission.VIEW_CHANNEL)).queue();
                 event.getChannel().sendMessage("Vous avez fermé le ticket").queue();
                 event.getChannel().asTextChannel().getManager().setName("fermer-" + event.getUser().getName()).queue();
         }
