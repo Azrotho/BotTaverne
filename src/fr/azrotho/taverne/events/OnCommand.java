@@ -1,10 +1,15 @@
 package fr.azrotho.taverne.events;
 
+import fr.azrotho.taverne.Main;
 import fr.azrotho.taverne.commands.*;
+import fr.azrotho.taverne.utils.XPManager;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.buttons.Button;
+
+import java.lang.reflect.Member;
 
 public class OnCommand extends ListenerAdapter {
 
@@ -91,6 +96,39 @@ public class OnCommand extends ListenerAdapter {
                 }else{
                     event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
                 }
+                break;
+            case "resetxp":
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                    User user = event.getOption("user").getAsUser();
+                    if(user != null) {
+                        Main.getLevel().put(user.getId(), 0L);
+                        Main.getXp().put(user.getId(), 0L);
+                        event.reply("Vous avez reset l'xp de " + user.getAsMention()).setEphemeral(true).queue();
+                    }
+                }else{
+                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
+                }
+                break;
+            case "xp":
+
+                if(event.getOption("user") != null) {
+                    User user = event.getOption("user").getAsUser();
+                    if(Main.getXp().containsKey(user.getId())) {
+                        event.reply("Le level de " + user.getAsMention() + " est de " + Main.getLevel().get(user.getId()) + " et il est à" + XPManager.getXP(user.getId()) + "/" + XPManager.getTotalXPForNextLevel(user.getId())).setEphemeral(true).queue();
+                    }else{
+                        event.reply("Zut, cette Utilsateur n'a pas d'XP :x").setEphemeral(true).queue();
+                    }
+                }else{
+                    if(Main.getXp().containsKey(event.getUser().getId())) {
+                        event.reply("Votre level est de " + Main.getLevel().get(event.getUser().getId()) + " et vous êtes à " + XPManager.getXP(event.getUser().getId()) + "/" + XPManager.getTotalXPForNextLevel(event.getUser().getId())).setEphemeral(true).queue();
+                    }else{
+                        event.reply("Zut, vous n'avez pas d'XP, Faut parler un peu... :x").setEphemeral(true).queue();
+                    }
+                }
+                break;
+            case "leaderboard":
+                LeaderboardCommand.leaderboard(event.getGuild(), event.getUser(), event.getChannel().asTextChannel());
+                event.reply("Vous avez demandé le leaderboard").setEphemeral(true).queue();
                 break;
         }
     }

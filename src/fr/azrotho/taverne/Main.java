@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -23,10 +24,15 @@ public class Main {
 
 
 
-
+    private static HashMap<String, Long> xp = new HashMap<>();
+    private static HashMap<String, Long> level = new HashMap<>();
+    private static HashMap<String, User> UserById = new HashMap<>();
 
 
     public static void main(String[] args) {
+
+
+
 
 
         JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
@@ -39,6 +45,7 @@ public class Main {
                 .enableIntents(GatewayIntent.GUILD_MESSAGES)
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .build();
+
 
         CommandListUpdateAction commands = jda.updateCommands();
 
@@ -116,6 +123,32 @@ public class Main {
                 Commands.slash("sendticket", "Envoie un message dans le salon ticket")
         );
 
+//        commands.addCommands(
+//                Commands.slash("resetxp", "Reset l'XP d'un membre")
+//                        .addOption(OptionType.USER, "user", "L'utilisateur à qui reset l'XP", true)
+//        );
+
+//        commands.addCommands(
+//                Commands.slash("xp", "Savoir son XP ou celui de quelqu'un d'autre")
+//                        .addOption(OptionType.USER, "user", "L'utilisateur dont on veut savoir l'XP", false)
+//        );
+
+//        commands.addCommands(
+//                Commands.slash("leaderboard", "Savoir son niveau ou celui de quelqu'un d'autre")
+//        );
         commands.queue();
+    }
+
+
+    public static HashMap<String, Long> getXp() {
+        return xp;
+    }
+
+    public static HashMap<String, Long> getLevel() {
+        return level;
+    }
+
+    public static HashMap<String, User> getUserById() {
+        return UserById;
     }
 }
