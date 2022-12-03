@@ -123,6 +123,10 @@ public class Main {
                 Commands.slash("sendticket", "Envoie un message dans le salon ticket")
         );
 
+        commands.addCommands(
+                Commands.slash("sendaddharuki", "Ajouter HARUKI !!!!")
+        );
+
 //        commands.addCommands(
 //                Commands.slash("resetxp", "Reset l'XP d'un membre")
 //                        .addOption(OptionType.USER, "user", "L'utilisateur à qui reset l'XP", true)

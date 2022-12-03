@@ -130,6 +130,9 @@ public class OnCommand extends ListenerAdapter {
                 LeaderboardCommand.leaderboard(event.getGuild(), event.getUser(), event.getChannel().asTextChannel());
                 event.reply("Vous avez demandé le leaderboard").setEphemeral(true).queue();
                 break;
+            case "sendaddharuki":
+                event.getChannel().sendMessage("Ajoutez Haruki à votre Serveur ça arrive bientôt!").setActionRow(Button.link("https://discord.com/oauth2/authorize?client_id=1048696324914171914&permissions=8&scope=bot%20applications.commands", "Ajouter Haruki")).queue();
+                event.reply("OK!").setEphemeral(true).queue();
         }
     }
 }
