@@ -4,11 +4,13 @@ import fr.azrotho.taverne.Main;
 import fr.azrotho.taverne.utils.XPManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.components.buttons.Button;
 
 public class OnMessage extends ListenerAdapter {
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
+        if(event.getAuthor().isBot()) return;
         System.out.println(event.getMessage().getContentRaw());
         if (event.getMessage().getContentRaw().equalsIgnoreCase("feur")) {
             event.getMessage().reply("ouge").queue();
@@ -18,6 +20,12 @@ public class OnMessage extends ListenerAdapter {
         }
         if(event.getMessage().getContentRaw().contains("<@1038130575959142423>")) {
             event.getMessage().reply("Bonjour je suis Raphael le gentil robot *(donnez moi une liste de phrase à dire)*").queue();
+        }
+        if(event.getMessage().getContentRaw().contains("<@1048696324914171914>")) {
+            event.getChannel().sendMessage("Haruki est un Bot Discord développé par le Grand Azrotho, C'est un bot de jeu qui sera en ligne le 31 Janvier 2023 ! *(Préparez-vous!)*").setActionRow(Button.link("https://discord.com/oauth2/authorize?client_id=1048696324914171914&permissions=8&scope=bot%20applications.commands", "Ajouter Haruki")).queue();
+        }
+        if(event.getMessage().getContentRaw().contains("Haruki")){
+            event.getMessage().reply("Haruki est un Bot Discord développé par le Grand Azrotho, C'est un bot de jeu qui sera en ligne le 31 Janvier 2023 ! *(Préparez-vous!)*").setActionRow(Button.link("https://discord.com/oauth2/authorize?client_id=1048696324914171914&permissions=8&scope=bot%20applications.commands", "Ajouter Haruki")).queue();
         }
 
         Main.getUserById().put(event.getAuthor().getId(), event.getAuthor());
