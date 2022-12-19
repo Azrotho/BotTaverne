@@ -3,6 +3,7 @@ package fr.azrotho.taverne;
 import fr.azrotho.taverne.events.OnButton;
 import fr.azrotho.taverne.events.OnCommand;
 import fr.azrotho.taverne.events.OnMessage;
+import fr.azrotho.taverne.utils.ManageLoadSave;
 import fr.azrotho.taverne.utils.Token;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -141,6 +142,18 @@ public class Main {
                 Commands.slash("leaderboard", "Savoir son niveau ou celui de quelqu'un d'autre")
         );
         commands.queue();
+
+
+        Thread save = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000 * 60);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ManageLoadSave.save();
+            }
+        });
     }
 
 

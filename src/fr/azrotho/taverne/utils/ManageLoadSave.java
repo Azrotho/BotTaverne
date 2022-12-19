@@ -6,6 +6,8 @@ import fr.azrotho.taverne.Main;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Map;
+
 
 public class ManageLoadSave {
     public static void save() {
@@ -32,12 +34,26 @@ public static void load() {
         builder.setPrettyPrinting();
         gson = builder.create();
         // Load XP
-        String json = FileUtil.loadContent(new File("xp.json"));
-        HashMap<String, Long> xp = gson.fromJson(json, HashMap.class);
-        Main.getXp().putAll(xp);
+        File file = new File("xp.json");
+        if (file.exists()) {
+            String json = FileUtil.loadContent(file);
+            HashMap<String, Long> map = gson.fromJson(json, HashMap.class);
+            for(Map.Entry<String, Long> entry : map.entrySet()) {
+                Main.getXp().put(entry.getKey(), entry.getValue());
+            }
+        }else{
+            FileUtil.save(file, "{}");
+        }
         // Load Level
-        json = FileUtil.loadContent(new File("level.json"));
-        HashMap<String, Long> level = gson.fromJson(json, HashMap.class);
-        Main.getLevel().putAll(level);
+        File file1 = new File("level.json");
+        if (file1.exists()) {
+            String json = FileUtil.loadContent(file1);
+            HashMap<String, Long> map = gson.fromJson(json, HashMap.class);
+            for (Map.Entry<String, Long> entry : map.entrySet()) {
+                Main.getLevel().put(entry.getKey(), entry.getValue());
+            }
+        }else{
+            FileUtil.save(file1, "{}");
+        }
     }
 }
