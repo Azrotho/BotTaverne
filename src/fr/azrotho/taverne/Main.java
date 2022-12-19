@@ -127,19 +127,19 @@ public class Main {
                 Commands.slash("sendaddharuki", "Ajouter HARUKI !!!!")
         );
 
-//        commands.addCommands(
-//                Commands.slash("resetxp", "Reset l'XP d'un membre")
-//                        .addOption(OptionType.USER, "user", "L'utilisateur à qui reset l'XP", true)
-//        );
+        commands.addCommands(
+                Commands.slash("resetxp", "Reset l'XP d'un membre")
+                        .addOption(OptionType.USER, "user", "L'utilisateur à qui reset l'XP", true)
+        );
 
-//        commands.addCommands(
-//                Commands.slash("xp", "Savoir son XP ou celui de quelqu'un d'autre")
-//                        .addOption(OptionType.USER, "user", "L'utilisateur dont on veut savoir l'XP", false)
-//        );
+        commands.addCommands(
+                Commands.slash("xp", "Savoir son XP ou celui de quelqu'un d'autre")
+                        .addOption(OptionType.USER, "user", "L'utilisateur dont on veut savoir l'XP", false)
+        );
 
-//        commands.addCommands(
-//                Commands.slash("leaderboard", "Savoir son niveau ou celui de quelqu'un d'autre")
-//        );
+        commands.addCommands(
+                Commands.slash("leaderboard", "Savoir son niveau ou celui de quelqu'un d'autre")
+        );
         commands.queue();
     }
 
