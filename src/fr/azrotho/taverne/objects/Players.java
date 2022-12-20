@@ -4,11 +4,13 @@ public class Players {
     private String id;
     private long xp;
     private int level;
+    private String name;
 
-    public Players(String id, long xp, int level) {
+    public Players(String id, long xp, int level, String name) {
         this.id = id;
         this.xp = xp;
         this.level = level;
+        this.name = name;
     }
 
     public String getId() {
@@ -64,7 +66,11 @@ public class Players {
         this.level = 0;
     }
 
+    public String getName() {
+        return name;
+    }
 
-
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }

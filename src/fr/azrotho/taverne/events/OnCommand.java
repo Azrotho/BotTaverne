@@ -2,6 +2,7 @@ package fr.azrotho.taverne.events;
 
 import fr.azrotho.taverne.Main;
 import fr.azrotho.taverne.commands.*;
+import fr.azrotho.taverne.objects.Players;
 import fr.azrotho.taverne.utils.XPManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.User;
@@ -98,31 +99,36 @@ public class OnCommand extends ListenerAdapter {
                 }
                 break;
             case "resetxp":
-                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)){
+                if(event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
                     User user = event.getOption("user").getAsUser();
-                    if(user != null) {
-                        Main.getLevel().put(user.getId(), 0L);
-                        Main.getXp().put(user.getId(), 0L);
-                        event.reply("Vous avez reset l'xp de " + user.getAsMention()).setEphemeral(true).queue();
+                    if (user != null) {
+                        Players players = Main.players.stream().filter(p -> p.getId().equals(event.getUser().getId())).findFirst().orElse(null);
+                        if (players != null) {
+                            players.setXp(0);
+                            players.setLevel(0);
+                            event.reply("Vous avez reset l'xp de " + user.getAsMention()).setEphemeral(true).queue();
+                        }
+                    } else {
+                        event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
                     }
-                }else{
-                    event.reply("Vous n'êtes pas mon maître.").setEphemeral(true).queue();
                 }
                 break;
             case "xp":
-
-                if(event.getOption("user") != null) {
-                    User user = event.getOption("user").getAsUser();
-                    if(Main.getXp().containsKey(user.getId())) {
-                        event.reply("Le level de " + user.getAsMention() + " est de " + Main.getLevel().get(user.getId()) + " et il est à" + XPManager.getXP(user.getId()) + "/" + XPManager.getTotalXPForNextLevel(user.getId())).setEphemeral(true).queue();
+                if(event.getOption("user") == null) {
+                    Players players = Main.players.stream().filter(p -> p.getId().equals(event.getUser().getId())).findFirst().orElse(null);
+                    if(players != null) {
+                        event.reply("Votre level "+ "est " + players.getLevel() + "\n" + "Votre progression:" + players.getXp() +  "/" + XPManager.getTotalXPForNextLevel(players.getId())).setEphemeral(true).queue();
                     }else{
-                        event.reply("Zut, cette Utilsateur n'a pas d'XP :x").setEphemeral(true).queue();
+                        event.reply("Vous n'avez jamais envoyé de message :x").setEphemeral(true).queue();
                     }
                 }else{
-                    if(Main.getXp().containsKey(event.getUser().getId())) {
-                        event.reply("Votre level est de " + Main.getLevel().get(event.getUser().getId()) + " et vous êtes à " + XPManager.getXP(event.getUser().getId()) + "/" + XPManager.getTotalXPForNextLevel(event.getUser().getId())).setEphemeral(true).queue();
+                    Players players = Main.players.stream().filter(p -> p.getId().equals(event.getOption("user").getAsUser().getId())).findFirst().orElse(null);
+                    if(players != null) {
+                        Long xp = players.getXp();
+                        int level = players.getLevel();
+                        event.reply("Le level de " + event.getOption("user").getAsUser().getAsMention() + " est " + level + "\n" + "Progression:" + players.getXp() + "/" + XPManager.getTotalXPForNextLevel(players.getId())).setEphemeral(true).queue();
                     }else{
-                        event.reply("Zut, vous n'avez pas d'XP, Faut parler un peu... :x").setEphemeral(true).queue();
+                        event.reply("Zut, cette personne n'a jamais parlé :x").setEphemeral(true).queue();
                     }
                 }
                 break;

@@ -26,7 +26,6 @@ public class ManageLoadSave {
     }
 
         public static void load () {
-
             Gson gson = new Gson();
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting();

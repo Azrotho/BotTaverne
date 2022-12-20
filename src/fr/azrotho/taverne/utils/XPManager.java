@@ -45,10 +45,6 @@ public class XPManager {
         // If level is different, level up
         if (level != currentLevel) {
             player.setLevel((int) level);
-            User user = Main.getUserById().get(id);
-            Guild guild = user.getJDA().getGuildById("714802389164752896");
-            TextChannel channel = guild.getTextChannelById("714802884511924304");
-            channel.sendMessage(user.getAsMention() + " a atteint le niveau " + level + "!").queue();
             return true;
         }else{
             return false;

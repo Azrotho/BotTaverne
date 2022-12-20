@@ -29,7 +29,6 @@ public class OnMessage extends ListenerAdapter {
             event.getMessage().reply("Haruki est un Bot Discord développé par le Grand Azrotho, C'est un bot de jeu qui sera en ligne le 31 Janvier 2023 ! *(Préparez-vous!)*").setActionRow(Button.link("https://discord.com/oauth2/authorize?client_id=1048696324914171914&permissions=8&scope=bot%20applications.commands", "Ajouter Haruki")).queue();
         }
 
-        Main.getUserById().put(event.getAuthor().getId(), event.getAuthor());
 
 
 
@@ -60,11 +59,14 @@ public class OnMessage extends ListenerAdapter {
             // Get Player
             Players player = Main.players.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
             if(player == null){
-                Players newPlayer = new Players(id, xp, 0);
+                Players newPlayer = new Players(id, xp, 0, event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator());
                 Main.players.add(newPlayer);
             }else{
                 player.addXp((int) (xp * booster));
-                XPManager.detectLevelup(event.getAuthor().getId());
+                if(XPManager.detectLevelup(event.getAuthor().getId())){
+                    player.setName(event.getMember().getUser().getName() + "#" + event.getMember().getUser().getDiscriminator());
+                    event.getChannel().sendMessage("Bravo <@" + event.getAuthor().getId() + "> tu viens de passer niveau " + player.getLevel() + "!").queue();
+                }
             }
 
 

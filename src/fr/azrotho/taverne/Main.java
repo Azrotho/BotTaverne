@@ -31,6 +31,7 @@ public class Main {
 
     public static List<Players> players = new ArrayList<Players>();
 
+    public static JDA jda;
 
     public static void main(String[] args) {
 
@@ -40,7 +41,9 @@ public class Main {
 
 
 
-        JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.noneOf(GatewayIntent.class)) // slash commands don't need any intents
+
+
+        JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.allOf(GatewayIntent.class)) // slash commands don't need any intents
                 .setStatus(OnlineStatus.DO_NOT_DISTURB)
                 .setActivity(Activity.streaming("sur twitch.tv/azrotho", "https://www.twitch.tv/azrotho")) // Display activity
                 .addEventListeners(new OnCommand())
@@ -50,6 +53,7 @@ public class Main {
                 .enableIntents(GatewayIntent.GUILD_MESSAGES)
                 .enableIntents(GatewayIntent.MESSAGE_CONTENT)
                 .build();
+
 
 
         CommandListUpdateAction commands = jda.updateCommands();
@@ -151,12 +155,16 @@ public class Main {
         Thread save = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(1000 * 30);
+                    Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                // Get All members
                 ManageLoadSave.save();
             }
         });
+        save.start();
     }
+
+
 }
