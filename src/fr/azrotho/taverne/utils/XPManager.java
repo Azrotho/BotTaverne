@@ -1,6 +1,7 @@
 package fr.azrotho.taverne.utils;
 
 import fr.azrotho.taverne.Main;
+import fr.azrotho.taverne.objects.Players;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
@@ -15,33 +16,10 @@ public class XPManager {
     // xp = Main.getXp();
     // level = Main.getLevel();
 
-    public static void addXP(String id, long amount) {
-        if(Main.getXp().get(id) == null){
-            Main.getXp().put(id, amount);
-            Main.getLevel().put(id, 0L);
-        }else {
-            long currentXP = Main.getXp().get(id);
-            Main.getXp().put(id, currentXP + amount);
-        }
-        detectLevelup(id);
-    }
-
-    public static long getXP(String id) {
-        return Main.getXp().get(id);
-    }
-
-    public static long getLevel(String id) {
-        return Main.getLevel().get(id);
-    }
-
-    public static long getXPForNextLevel(String id) {
-        long currentLevel = Main.getLevel().get(id);
-        long nextLevelXP = 100 * (currentLevel + 1);
-        return nextLevelXP;
-    }
 
     public static long getTotalXPForNextLevel(String id){
-        long currentLevel = Main.getLevel().get(id);
+        Players player = Main.players.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
+        long currentLevel = player.getLevel();
         long nextLevelXP = 100 * (currentLevel);
         long totalXP = nextLevelXP;
         for(long i = 1; i < currentLevel; i++){
@@ -53,9 +31,10 @@ public class XPManager {
     public static boolean detectLevelup(String id) {
         System.out.println("Detecting levelup for " + id);
         // Get Level
-        long currentLevel = Main.getLevel().get(id);
+        Players player = Main.players.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
+        long currentLevel = player.getLevel();
         // Get XP
-        long currentXP = Main.getXp().get(id);
+        long currentXP = player.getXp();
         // Calcul current level with XP
         long level = 0;
         long xp = 0;
@@ -65,7 +44,7 @@ public class XPManager {
         }
         // If level is different, level up
         if (level != currentLevel) {
-            Main.getLevel().put(id, level);
+            player.setLevel((int) level);
             User user = Main.getUserById().get(id);
             Guild guild = user.getJDA().getGuildById("714802389164752896");
             TextChannel channel = guild.getTextChannelById("714802884511924304");

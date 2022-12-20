@@ -1,6 +1,7 @@
 package fr.azrotho.taverne.events;
 
 import fr.azrotho.taverne.Main;
+import fr.azrotho.taverne.objects.Players;
 import fr.azrotho.taverne.utils.XPManager;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -34,52 +35,38 @@ public class OnMessage extends ListenerAdapter {
 
 
         if (event.getMessage().getContentRaw().length() > 5 && !event.getMember().getRoles().contains(event.getGuild().getRoleById("925340625631584297")) && !event.getAuthor().isBot()) {
-
             int len = event.getMessage().getContentRaw().length();
-
             double booster = 1;
-
             int xp = len / 10 + 1;
-
             if (xp > 10) {
-
                 xp = 10;
-
             }
-
             if(event.getMember().getRoles().contains(event.getGuild().getRoleById("1048346722092466256"))){
-
                 booster = 1.2;
-
             }
-
             if(event.getMember().getRoles().contains(event.getGuild().getRoleById("1048351615519838289"))){
-
                 booster = 1.5;
-
             }
-
             if(event.getMember().getRoles().contains(event.getGuild().getRoleById("1048370427799535708"))){
-
                 booster = 1.8;
-
             }
-
             if(event.getMember().getRoles().contains(event.getGuild().getRoleById("1048370013582659665"))){
-
                 booster = 2;
-
             }
-
             if(event.getMember().getRoles().contains(event.getGuild().getRoleById("1048370091068243999"))){
-
                 booster = 2.5;
-
+            }
+            String id = event.getAuthor().getId();
+            // Get Player
+            Players player = Main.players.stream().filter(p -> p.getId().equals(id)).findFirst().orElse(null);
+            if(player == null){
+                Players newPlayer = new Players(id, xp, 0);
+                Main.players.add(newPlayer);
+            }else{
+                player.addXp((int) (xp * booster));
+                XPManager.detectLevelup(event.getAuthor().getId());
             }
 
-            String id = event.getAuthor().getId();
-
-            XPManager.addXP(id, (long) (xp*booster));
 
         }
     }

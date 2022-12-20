@@ -4,6 +4,7 @@ import fr.azrotho.taverne.events.OnButton;
 import fr.azrotho.taverne.events.OnCommand;
 import fr.azrotho.taverne.events.OnMessage;
 import fr.azrotho.taverne.utils.ManageLoadSave;
+import fr.azrotho.taverne.objects.Players;
 import fr.azrotho.taverne.utils.Token;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -18,21 +19,24 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
 
 
+    public static Main INSTANCE;
 
-    private static HashMap<String, Long> xp = new HashMap<>();
-    private static HashMap<String, Long> level = new HashMap<>();
-    private static HashMap<String, User> UserById = new HashMap<>();
+    public static List<Players> players = new ArrayList<Players>();
 
 
     public static void main(String[] args) {
 
 
+
+        ManageLoadSave.load();
 
 
 
@@ -147,25 +151,12 @@ public class Main {
         Thread save = new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(1000 * 60);
+                    Thread.sleep(1000 * 30);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 ManageLoadSave.save();
             }
         });
-    }
-
-
-    public static HashMap<String, Long> getXp() {
-        return xp;
-    }
-
-    public static HashMap<String, Long> getLevel() {
-        return level;
-    }
-
-    public static HashMap<String, User> getUserById() {
-        return UserById;
     }
 }

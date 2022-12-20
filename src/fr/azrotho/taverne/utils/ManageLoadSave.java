@@ -3,6 +3,7 @@ package fr.azrotho.taverne.utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import fr.azrotho.taverne.Main;
+import fr.azrotho.taverne.objects.Players;
 
 import java.io.File;
 import java.util.HashMap;
@@ -18,42 +19,26 @@ public class ManageLoadSave {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         gson = builder.create();
-        // Save XP
-        String json = gson.toJson(Main.getXp());
-        FileUtil.save(new File("xp.json"), json);
-        // Save Level
-        json = gson.toJson(Main.getLevel());
-        FileUtil.save(new File("level.json"), json);
+        // Save Players
+        for (Players players : Main.players) {
+            FileUtil.save(new File("players/" + players.getId() + ".json"), gson.toJson(players));
+        }
     }
-public static void load() {
-        // Load XP in json
-        // Load Level in json
 
-        Gson gson = new Gson();
-        GsonBuilder builder = new GsonBuilder();
-        builder.setPrettyPrinting();
-        gson = builder.create();
-        // Load XP
-        File file = new File("xp.json");
-        if (file.exists()) {
-            String json = FileUtil.loadContent(file);
-            HashMap<String, Long> map = gson.fromJson(json, HashMap.class);
-            for(Map.Entry<String, Long> entry : map.entrySet()) {
-                Main.getXp().put(entry.getKey(), entry.getValue());
+        public static void load () {
+
+            Gson gson = new Gson();
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting();
+            gson = builder.create();
+            File folder = new File("players");
+            File[] listOfFiles = folder.listFiles();
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    String content = FileUtil.loadContent(file);
+                    Players players = gson.fromJson(content, Players.class);
+                    Main.players.add(players);
+                }
             }
-        }else{
-            FileUtil.save(file, "{}");
-        }
-        // Load Level
-        File file1 = new File("level.json");
-        if (file1.exists()) {
-            String json = FileUtil.loadContent(file1);
-            HashMap<String, Long> map = gson.fromJson(json, HashMap.class);
-            for (Map.Entry<String, Long> entry : map.entrySet()) {
-                Main.getLevel().put(entry.getKey(), entry.getValue());
-            }
-        }else{
-            FileUtil.save(file1, "{}");
         }
     }
-}
