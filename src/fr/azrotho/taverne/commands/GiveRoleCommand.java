@@ -6,7 +6,7 @@ import net.dv8tion.jda.api.entities.Role;
 
 public class GiveRoleCommand {
     public static void giveRole(Guild guild, Role role) {
-        for(Member member : guild.getMemberCache()){
+        for(Member member : guild.loadMembers().get()) {
             System.out.println(member.getNickname());
                 guild.addRoleToMember(member, role).queue();
         }

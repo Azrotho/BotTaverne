@@ -109,10 +109,10 @@ public class Main {
        commands.addCommands(
                 Commands.slash("sendrole", "Envoie le rôle")
         );
-//        commands.addCommands(
-//                Commands.slash("giverole", "Donne le role à tous le monde")
-//                        .addOption(OptionType.ROLE, "role", "Le rôle à donner", true)
-//        );
+        commands.addCommands(
+                Commands.slash("giverole", "Donne le role à tous le monde")
+                        .addOption(OptionType.ROLE, "role", "Le rôle à donner", true)
+        );
         commands.addCommands(
                 Commands.slash("say", "Fait dire quelque chose au bot")
                         .addOption(OptionType.STRING, "message", "Le message à faire dire au bot", true)
