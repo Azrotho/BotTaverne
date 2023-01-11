@@ -9,10 +9,7 @@ import fr.azrotho.taverne.utils.Token;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
-import net.dv8tion.jda.api.entities.Activity;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
@@ -30,17 +27,13 @@ public class Main {
     public static Main INSTANCE;
 
     public static List<Players> players = new ArrayList<Players>();
+    private static HashMap<String, Integer> cooldownMessage = new HashMap<String, Integer>();
 
     public static JDA jda;
 
     public static void main(String[] args) {
 
-
-
         ManageLoadSave.load();
-
-
-
 
 
         JDA jda = JDABuilder.createLight(Token.tokens, EnumSet.allOf(GatewayIntent.class)) // slash commands don't need any intents
@@ -152,19 +145,42 @@ public class Main {
         commands.queue();
 
 
+
+
         Thread save = new Thread(() -> {
             while (true) {
+
+                // Get All members
+
+
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                // Get All members
+
                 ManageLoadSave.save();
             }
         });
         save.start();
+
+        Thread cooldown = new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Get All members
+                cooldownMessage.replaceAll((k, v) -> v - 1);
+                cooldownMessage.entrySet().removeIf(entry -> entry.getValue() <= 0);
+            }
+        });
+
+        cooldown.start();
     }
 
-
+    public static HashMap<String, Integer> getCooldownMessage() {
+        return cooldownMessage;
+    }
 }

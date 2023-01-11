@@ -35,10 +35,10 @@ public class OnButton extends ListenerAdapter {
         if(roles.containsKey(event.getButton().getId())) {
             if (event.getMember().getRoles().contains(event.getGuild().getRoleById(roles.get(event.getButton().getId())))) {
                 event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roles.get(event.getButton().getId()))).queue();
-                event.reply("Vous avez ajouté le rôle: " + event.getGuild().getRoleById(roles.get(event.getButton().getId())).getAsMention()).setEphemeral(true).queue();
+                event.reply("Vous avez retiré le rôle: " + event.getGuild().getRoleById(roles.get(event.getButton().getId())).getAsMention()).setEphemeral(true).queue();
             } else {
                 event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roles.get(event.getButton().getId()))).queue();
-                event.reply("Vous avez retiré le rôle: " + event.getGuild().getRoleById(roles.get(event.getButton().getId())).getAsMention()).setEphemeral(true).queue();
+                event.reply("Vous avez ajouté le rôle: " + event.getGuild().getRoleById(roles.get(event.getButton().getId())).getAsMention()).setEphemeral(true).queue();
             }
         }
 
